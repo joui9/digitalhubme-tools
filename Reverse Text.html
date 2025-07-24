@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalHubMe - Reverse Text</title>
+    <meta name="description" content="An online tool to quickly reverse the order of characters in any text. Free to use at DigitalHubMe.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* General body and container styling for a clean, standalone tool page */
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Basic styling for the message box */
+        .message-box {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .message-box.show {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Message Box for notifications -->
+    <div id="messageBox" class="message-box"></div>
+
+    <main class="container">
+        <!-- Reverse Text Tool Page Content -->
+        <section id="reverseTextPage" class="tool-page">
+            <button onclick="window.location.href='YOUR_CARRD_SITE_URL';"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full mb-6 transition duration-300">
+                &larr; Back to Tools
+            </button>
+            <h3 class="text-3xl font-bold text-pink-700 mb-6 text-center">↩️ Reverse Text</h3>
+            <p class="text-gray-600 mb-6 text-center">Enter text to reverse its characters.</p>
+
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="w-full md:w-1/2">
+                    <label for="reverseInput" class="block text-gray-700 text-lg font-medium mb-2">Input Text:</label>
+                    <textarea id="reverseInput" class="w-full p-4 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-pink-500" rows="10" placeholder="Enter text here..."></textarea>
+                    <button id="reverseTextBtn" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out w-full">
+                        Reverse Text
+                    </button>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <label for="reverseOutput" class="block text-gray-700 text-lg font-medium mb-2">Reversed Text:</label>
+                    <textarea id="reverseOutput" class="w-full p-4 border border-gray-300 rounded-md bg-gray-50 cursor-not-allowed" rows="10" readonly></textarea>
+                    <button id="copyReversedTextBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out w-full mt-4">
+                        Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- Common Functions for this standalone page ---
+        const messageBox = document.getElementById('messageBox');
+        function showMessage(message, type = 'success') {
+            messageBox.textContent = message;
+            messageBox.className = 'message-box show';
+            if (type === 'success') {
+                messageBox.style.backgroundColor = '#4CAF50';
+            } else if (type === 'error') {
+                messageBox.style.backgroundColor = '#f44336';
+            } else if (type === 'info') {
+                messageBox.style.backgroundColor = '#2196F3';
+            }
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- Reverse Text Tool Logic ---
+        const reverseInput = document.getElementById('reverseInput');
+        const reverseOutput = document.getElementById('reverseOutput');
+        const reverseTextBtn = document.getElementById('reverseTextBtn');
+        const copyReversedTextBtn = document.getElementById('copyReversedTextBtn');
+
+        reverseTextBtn.addEventListener('click', () => {
+            const inputText = reverseInput.value;
+            if (inputText.trim() === '') {
+                showMessage('Please enter text to reverse!', 'error');
+                reverseOutput.value = '';
+                return;
+            }
+
+            const reversedText = inputText.split('').reverse().join('');
+            reverseOutput.value = reversedText;
+            showMessage('Text reversed successfully!', 'success');
+        });
+
+        copyReversedTextBtn.addEventListener('click', () => {
+            if (reverseOutput.value.trim() === '') {
+                showMessage('Nothing to copy. Reverse text first!', 'error');
+                return;
+            }
+            reverseOutput.select();
+            document.execCommand('copy');
+            showMessage('Reversed text copied to clipboard!', 'success');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // No specific init needed for this tool beyond event listeners
+        });
+    </script>
+</body>
+</html>
