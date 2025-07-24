@@ -1,0 +1,191 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DigitalHubMe - Your Go-To Online Toolbox</title>
+        <meta name="description" content="A collection of free online text, image, file, and utility tools for everyday tasks.">
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            body { font-family: "Inter", sans-serif; background-color: #f3f4f6; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+            header { background-color: #6d28d9; /* Purple-700 */ color: white; padding: 1.5rem 0; text-align: center; border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem; }
+            h1 { font-size: 2.5rem; font-weight: bold; }
+            .tagline { font-size: 1.25rem; margin-top: 0.5rem; }
+            .tool-category-section { padding: 3rem 1rem; max-width: 1200px; margin: 0 auto; }
+            .category-title { font-size: 2.25rem; font-weight: bold; text-align: center; margin-bottom: 2.5rem; color: #6d28d9; /* Purple-700 */ }
+            .tool-grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .tool-card {
+                background-color: #ffffff;
+                border-radius: 1rem;
+                padding: 1.5rem;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            }
+            .tool-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            .tool-icon { width: 64px; height: 64px; margin-bottom: 1rem; }
+            .tool-name { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem; color: #4b0d9e; /* Purple-900 */ }
+            .tool-description { font-size: 1rem; color: #4b5563; /* Gray-600 */ margin-bottom: 1.5rem; flex-grow: 1; }
+            .open-tool-btn {
+                background-color: #8b5cf6; /* Purple-500 */
+                color: white;
+                font-weight: bold;
+                padding: 0.75rem 1.5rem;
+                border-radius: 9999px; /* Full rounded */
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: background-color 0.3s ease, transform 0.3s ease;
+                width: 100%;
+                max-width: 200px; /* Limit button width */
+            }
+            .open-tool-btn:hover {
+                background-color: #7c3aed; /* Purple-600 */
+                transform: translateY(-2px);
+            }
+            footer { background-color: #4b0d9e; /* Purple-900 */ color: white; text-align: center; padding: 1.5rem 0; margin-top: auto; }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1 class="text-white text-5xl tracking-tight">Digital<span class="text-blue-300">Hubme</span></h1>
+            <p class="tagline text-blue-200">Your Go-To Online Toolbox</p>
+        </header>
+
+        <main class="tool-category-section">
+            <h2 class="category-title mb-8">📄 Text Tools</h2>
+            <div class="tool-grid">
+                <!-- TEXT MANIPULATOR CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/A78BFA/FFFFFF?text=📝" alt="Text Manipulator Icon" class="tool-icon">
+                    <h3 class="tool-name">Text Manipulator</h3>
+                    <p class="tool-description">Count characters/words and change text case.</p>
+                    <a href="text-manipulator.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- SORT & REMOVE DUPLICATES CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/F87171/FFFFFF?text=✔️" alt="Sort Duplicates Icon" class="tool-icon">
+                    <h3 class="tool-name">Sort & Remove Duplicates</h3>
+                    <p class="tool-description">Sort a list and remove duplicate entries.</p>
+                    <a href="sort-remove-duplicates.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- SORT LINES ALPHABETICALLY CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/34D399/FFFFFF?text=🔠" alt="Sort Lines Icon" class="tool-icon">
+                    <h3 class="tool-name">Sort Lines Alphabetically</h3>
+                    <p class="tool-description">Sort lines of text in alphabetical order.</p>
+                    <a href="sort-lines-alphabetically.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- REVERSE TEXT CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/FB923C/FFFFFF?text=↩️" alt="Reverse Text Icon" class="tool-icon">
+                    <h3 class="tool-name">Reverse Text</h3>
+                    <p class="tool-description">Reverse the order of characters in text.</p>
+                    <a href="reverse-text.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- FIND & REPLACE IN TEXT CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/60A5FA/FFFFFF?text=🔍" alt="Find Replace Icon" class="tool-icon">
+                    <h3 class="tool-name">Find & Replace in Text</h3>
+                    <p class="tool-description">Find specific text and replace it with new text.</p>
+                    <a href="find-replace-text.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- JSON FORMATTER CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/FBBF24/FFFFFF?text=📊" alt="JSON Icon" class="tool-icon">
+                    <h3 class="tool-name">JSON Formatter</h3>
+                    <p class="tool-description">Format and validate JSON for readability.</p>
+                    <a href="json-formatter.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- BASE64 ENCODE/DECODE CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/EF4444/FFFFFF?text=🔑" alt="Base64 Icon" class="tool-icon">
+                    <h3 class="tool-name">Base64 Encode/Decode</h3>
+                    <p class="tool-description">Encode/decode text to/from Base64.</p>
+                    <a href="base64-encode-decode.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- MARKDOWN TO HTML CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/A855F7/FFFFFF?text=📝" alt="Markdown Icon" class="tool-icon">
+                    <h3 class="tool-name">Markdown to HTML</h3>
+                    <p class="tool-description">Convert Markdown text into HTML.</p>
+                    <a href="markdown-to-html.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- HTML ESCAPE/UNESCAPE CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/4B5563/FFFFFF?text=⚙️" alt="HTML Escape Icon" class="tool-icon">
+                    <h3 class="tool-name">HTML Escape/Unescape</h3>
+                    <p class="tool-description">Escape/unescape HTML special characters.</p>
+                    <a href="html-escape-unescape.html" class="open-tool-btn">Open Tool</a>
+                </div>
+            </div>
+
+            <!-- Placeholder for other categories -->
+            <h2 class="category-title mt-12 mb-8">🖼️ Image Tools</h2>
+            <div class="tool-grid">
+                <!-- IMAGE RESIZER CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/9B2C2C/FFFFFF?text=📏" alt="Image Resizer Icon" class="tool-icon">
+                    <h3 class="tool-name">Image Resizer</h3>
+                    <p class="tool-description">Change image dimensions easily.</p>
+                    <a href="image-resizer.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- IMAGE COMPRESSOR CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/10B981/FFFFFF?text=🗜️" alt="Image Compressor Icon" class="tool-icon">
+                    <h3 class="tool-name">Image Compressor</h3>
+                    <p class="tool-description">Compress images to reduce file size.</p>
+                    <a href="image-compressor.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- CONVERT JPG <-> PNG CARD -->
+                <div class="tool-card">
+                    <img src="https://via.placeholder.com/64x64/3B82F6/FFFFFF?text=🔄" alt="Convert JPG PNG Icon" class="tool-icon">
+                    <h3 class="tool-name">Convert JPG ↔ PNG</h3>
+                    <p class="tool-description">Convert between JPG and PNG formats.</p>
+                    <a href="convert-jpg-png.html" class="open-tool-btn">Open Tool</a>
+                </div>
+
+                <!-- Placeholder for other Image tools -->
+                <div class="tool-card opacity-50 cursor-not-allowed">
+                    <img src="https://via.placeholder.com/64x64/D1D5DB/A0A0A0?text=⏳" alt="Coming Soon Icon" class="tool-icon">
+                    <h3 class="tool-name">Image Cropper</h3>
+                    <p class="tool-description">Crop images to your desired size. (Coming Soon!)</p>
+                    <button class="open-tool-btn opacity-50 cursor-not-allowed" disabled>Coming Soon</button>
+                </div>
+            </div>
+
+
+            <h2 class="category-title mt-12 mb-8">🧠 Utility Tools</h2>
+            <div class="tool-grid">
+                <div class="tool-card opacity-50 cursor-not-allowed">
+                    <img src="https://via.placeholder.com/64x64/D1D5DB/A0A0A0?text=⏳" alt="Coming Soon Icon" class="tool-icon">
+                    <h3 class="tool-name">Password Generator</h3>
+                    <p class="tool-description">Generate strong, random passwords. (Coming Soon!)</p>
+                    <button class="open-tool-btn opacity-50 cursor-not-allowed" disabled>Coming Soon</button>
+                </div>
+            </div>
+
+            <!-- Add other categories as needed -->
+        </main>
+
+        <footer>
+            <p>&copy; 2023 DigitalHubMe. All rights reserved.</p>
+        </footer>
+    </body>
+    </html>
+    
