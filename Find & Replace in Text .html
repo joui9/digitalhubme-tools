@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalHubMe - Find & Replace in Text</title>
+    <meta name="description" content="An online tool to find specific text and replace it with new text, with case-sensitive option. Free to use at DigitalHubMe.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* General body and container styling for a clean, standalone tool page */
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Basic styling for the message box */
+        .message-box {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .message-box.show {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Message Box for notifications -->
+    <div id="messageBox" class="message-box"></div>
+
+    <main class="container">
+        <!-- Find & Replace in Text Tool Page Content -->
+        <section id="findReplaceTextPage" class="tool-page">
+            <button onclick="window.location.href='YOUR_CARRD_SITE_URL';"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full mb-6 transition duration-300">
+                &larr; Back to Tools
+            </button>
+            <h3 class="text-3xl font-bold text-indigo-700 mb-6 text-center">🔍 Find & Replace in Text</h3>
+            <p class="text-gray-600 mb-6 text-center">Find specific text and replace it with new text.</p>
+
+            <div class="flex flex-col gap-6">
+                <div>
+                    <label for="originalText" class="block text-gray-700 text-lg font-medium mb-2">Original Text:</label>
+                    <textarea id="originalText" class="w-full p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" rows="8" placeholder="Enter your text here..."></textarea>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="w-full sm:w-1/2">
+                        <label for="findText" class="block text-gray-700 text-lg font-medium mb-2">Find Text:</label>
+                        <input type="text" id="findText" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Text to find...">
+                    </div>
+                    <div class="w-full sm:w-1/2">
+                        <label for="replaceText" class="block text-gray-700 text-lg font-medium mb-2">Replace With:</label>
+                        <input type="text" id="replaceText" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Text to replace with...">
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" id="caseSensitive" class="form-checkbox h-5 w-5 text-indigo-600 rounded focus:ring-indigo-500">
+                    <label for="caseSensitive" class="text-gray-700">Case-sensitive</label>
+                </div>
+                <button id="findReplaceBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out w-full">
+                    Find & Replace
+                </button>
+                <div>
+                    <label for="resultText" class="block text-gray-700 text-lg font-medium mb-2">Result Text:</label>
+                    <textarea id="resultText" class="w-full p-4 border border-gray-300 rounded-md bg-gray-50 cursor-not-allowed" rows="8" readonly></textarea>
+                    <button id="copyResultTextBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out w-full mt-4">
+                        Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- Common Functions for this standalone page ---
+        const messageBox = document.getElementById('messageBox');
+        function showMessage(message, type = 'success') {
+            messageBox.textContent = message;
+            messageBox.className = 'message-box show';
+            if (type === 'success') {
+                messageBox.style.backgroundColor = '#4CAF50';
+            } else if (type === 'error') {
+                messageBox.style.backgroundColor = '#f44336';
+            } else if (type === 'info') {
+                messageBox.style.backgroundColor = '#2196F3';
+            }
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- Find & Replace in Text Tool Logic ---
+        const originalText = document.getElementById('originalText');
+        const findText = document.getElementById('findText');
+        const replaceText = document.getElementById('replaceText');
+        const caseSensitive = document.getElementById('caseSensitive');
+        const findReplaceBtn = document.getElementById('findReplaceBtn');
+        const resultText = document.getElementById('resultText');
+        const copyResultTextBtn = document.getElementById('copyResultTextBtn');
+
+        findReplaceBtn.addEventListener('click', () => {
+            const inputText = originalText.value;
+            const findStr = findText.value;
+            const replaceStr = replaceText.value;
+            const isCaseSensitive = caseSensitive.checked;
+
+            if (inputText.trim() === '') {
+                showMessage('Please enter text in the original text area!', 'error');
+                resultText.value = '';
+                return;
+            }
+            if (findStr.trim() === '') {
+                showMessage('Please enter text to find!', 'error');
+                resultText.value = '';
+                return;
+            }
+
+            let flags = 'g'; // Global replacement
+            if (!isCaseSensitive) {
+                flags += 'i'; // Case-insensitive
+            }
+
+            try {
+                const regex = new RegExp(findStr, flags);
+                const replaced = inputText.replace(regex, replaceStr);
+                resultText.value = replaced;
+                showMessage('Find and Replace completed!', 'success');
+            } catch (e) {
+                showMessage('Invalid search pattern. Please check your "Find Text".', 'error');
+                console.error("Regex error:", e);
+            }
+        });
+
+        copyResultTextBtn.addEventListener('click', () => {
+            if (resultText.value.trim() === '') {
+                showMessage('Nothing to copy. Perform find & replace first!', 'error');
+                return;
+            }
+            resultText.select();
+            document.execCommand('copy');
+            showMessage('Result text copied to clipboard!', 'success');
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // No specific init needed for this tool beyond event listeners
+        });
+    </script>
+</body>
+</html>
