@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalHubMe - Text Manipulator</title> <!-- UNIQUE TITLE for SEO -->
+    <meta name="description" content="An online text manipulation tool to count characters, words, and change text case. Use it free at DigitalHubMe."> <!-- UNIQUE DESCRIPTION for SEO -->
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Add any specific styles needed for this page or just general ones for a standalone tool page */
+        body { font-family: "Inter", sans-serif; background-color: #f3f4f6; color: #333; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 2rem; background-color: #fff; border-radius: 0.75rem; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        /* Basic styling for the message box, adjust if needed for standalone */
+        .message-box {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .message-box.show { display: block; opacity: 1; }
+    </style>
+</head>
+<body>
+    <!-- Message Box for notifications -->
+    <div id="messageBox" class="message-box"></div>
+
+    <main class="container">
+        <!-- PASTE THE ENTIRE <section id="textManipulatorPage"> BLOCK HERE -->
+
+        <section id="textManipulatorPage" class="tool-page bg-white p-8 rounded-xl shadow-lg">
+            <!-- Keep the Back to Tools button here but update its link -->
+            <button onclick="window.location.href='YOUR_CARRD_SITE_URL';"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full mb-6 transition duration-300">
+                &larr; Back to Tools
+            </button>
+            <h3 class="text-3xl font-bold text-purple-700 mb-6 text-center">📝 Text Manipulator</h3>
+            <p class="text-gray-600 mb-6 text-center">Count characters/words and change text case.</p>
+
+            <textarea id="textInput" class="w-full p-4 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-purple-500" rows="10" placeholder="Type or paste your text here..."></textarea>
+
+            <div class="flex flex-wrap justify-center gap-4 mb-6">
+                <div class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">Characters: <span id="charCount">0</span></div>
+                <div class="bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-medium">Words: <span id="wordCount">0</span></div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-4">
+                <button id="uppercaseBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-5 rounded-full shadow-md hover:shadow-lg transition duration-300">
+                    UPPERCASE
+                </button>
+                <button id="lowercaseBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-5 rounded-full shadow-md hover:shadow-lg transition duration-300">
+                    lowercase
+                </button>
+                <button id="titlecaseBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-5 rounded-full shadow-md hover:shadow-lg transition duration-300">
+                    Title Case
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- Common Functions (re-define for standalone page) ---
+        const messageBox = document.getElementById('messageBox');
+        function showMessage(message, type = 'success') {
+            messageBox.textContent = message;
+            messageBox.className = 'message-box show';
+            if (type === 'success') { messageBox.style.backgroundColor = '#4CAF50'; }
+            else if (type === 'error') { messageBox.style.backgroundColor = '#f44336'; }
+            else if (type === 'info') { messageBox.style.backgroundColor = '#2196F3'; }
+            setTimeout(() => { messageBox.classList.remove('show'); }, 3000);
+        }
+
+        // --- Text Manipulator Tool Logic (copy directly from original HTML) ---
+        const textInput = document.getElementById('textInput');
+        const charCountSpan = document.getElementById('charCount');
+        const wordCountSpan = document.getElementById('wordCount');
+        const uppercaseBtn = document.getElementById('uppercaseBtn');
+        const lowercaseBtn = document.getElementById('lowercaseBtn');
+        const titlecaseBtn = document.getElementById('titlecaseBtn');
+
+        function updateTextCounts() {
+            const text = textInput.value;
+            charCountSpan.textContent = text.length;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            wordCountSpan.textContent = words.length;
+        }
+
+        textInput.addEventListener('input', updateTextCounts);
+        uppercaseBtn.addEventListener('click', () => {
+            textInput.value = textInput.value.toUpperCase();
+            updateTextCounts();
+            showMessage('Text converted to UPPERCASE!', 'info');
+        });
+        lowercaseBtn.addEventListener('click', () => {
+            textInput.value = textInput.value.toLowerCase();
+            updateTextCounts();
+            showMessage('Text converted to lowercase!', 'info');
+        });
+        titlecaseBtn.addEventListener('click', () => {
+            const text = textInput.value;
+            textInput.value = text.replace(/\w\S*/g, (txt) => {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            });
+            updateTextCounts();
+            showMessage('Text converted to Title Case!', 'info');
+        });
+
+        // Initialize counts on page load for Text Manipulator
+        document.addEventListener('DOMContentLoaded', updateTextCounts);
+    </script>
+</body>
+</html>
