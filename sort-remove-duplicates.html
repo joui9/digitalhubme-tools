@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitalHubMe - Sort & Remove Duplicates</title>
+    <meta name="description" content="An online tool to sort lists alphabetically and efficiently remove duplicate entries. Free to use at DigitalHubMe.">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* General body and container styling for a clean, standalone tool page */
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+            color: #333;
+            min-height: 100vh; /* Ensure full height for background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+        }
+        .container {
+            max-width: 900px; /* Max width for content */
+            width: 100%; /* Full width up to max-width */
+            margin: 2rem auto; /* Margin top/bottom, auto for horizontal centering */
+            padding: 2rem;
+            background-color: #fff; /* White background for the tool area */
+            border-radius: 0.75rem; /* Rounded corners */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        /* Basic styling for the message box (copied from main site) */
+        .message-box {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .message-box.show {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Message Box for notifications -->
+    <div id="messageBox" class="message-box"></div>
+
+    <main class="container">
+        <!-- Sort & Remove Duplicates Tool Page Content -->
+        <section id="sortRemoveDuplicatesPage" class="tool-page">
+            <button onclick="window.location.href='YOUR_CARRD_SITE_URL';"
+                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full mb-6 transition duration-300">
+                &larr; Back to Tools
+            </button>
+            <h3 class="text-3xl font-bold text-blue-700 mb-6 text-center">📋 Sort & Remove Duplicates</h3>
+            <p class="text-gray-600 mb-6 text-center">Enter a list of items (one per line) to sort and remove duplicates.</p>
+
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="w-full md:w-1/2">
+                    <label for="inputList" class="block text-gray-700 text-lg font-medium mb-2">Input List:</label>
+                    <textarea id="inputList" class="w-full p-4 border border-gray-300 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="10" placeholder="Enter items here, one per line..."></textarea>
+                    <button id="processListBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out w-full">
+                        Process List
+                    </button>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <label for="outputList" class="block text-gray-700 text-lg font-medium mb-2">Processed List:</label>
+                    <textarea id="outputList" class="w-full p-4 border border-gray-300 rounded-md bg-gray-50 cursor-not-allowed" rows="10" readonly></textarea>
+                    <button id="copyListBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out w-full mt-4">
+                        Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // --- Common Functions for this standalone page ---
+        const messageBox = document.getElementById('messageBox');
+        function showMessage(message, type = 'success') {
+            messageBox.textContent = message;
+            messageBox.className = 'message-box show';
+            if (type === 'success') {
+                messageBox.style.backgroundColor = '#4CAF50';
+            } else if (type === 'error') {
+                messageBox.style.backgroundColor = '#f44336';
+            } else if (type === 'info') {
+                messageBox.style.backgroundColor = '#2196F3';
+            }
+            setTimeout(() => {
+                messageBox.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- Sort & Remove Duplicates Tool Logic ---
+        const inputList = document.getElementById('inputList');
+        const outputList = document.getElementById('outputList');
+        const processListBtn = document.getElementById('processListBtn');
+        const copyListBtn = document.getElementById('copyListBtn');
+
+        processListBtn.addEventListener('click', () => {
+            const inputText = inputList.value;
+            if (inputText.trim() === '') {
+                showMessage('Please enter items in the input list!', 'error');
+                outputList.value = '';
+                return;
+            }
+
+            // Split by new line, trim each item, filter out empty lines
+            let items = inputText.split('\n').map(item => item.trim()).filter(item => item !== '');
+
+            // Remove duplicates using a Set
+            const uniqueItems = [...new Set(items)];
+
+            // Sort the unique items alphabetically
+            uniqueItems.sort();
+
+            // Join them back with new lines
+            outputList.value = uniqueItems.join('\n');
+            showMessage('List processed: sorted and duplicates removed!', 'success');
+        });
+
+        copyListBtn.addEventListener('click', () => {
+            if (outputList.value.trim() === '') {
+                showMessage('Nothing to copy. Process a list first!', 'error');
+                return;
+            }
+            outputList.select(); // Select the text in the textarea
+            document.execCommand('copy'); // Copy the selected text
+            showMessage('Processed list copied to clipboard!', 'success');
+        });
+
+        // Initialize any necessary logic on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // No specific init needed for this tool beyond event listeners
+        });
+    </script>
+</body>
+</html>
